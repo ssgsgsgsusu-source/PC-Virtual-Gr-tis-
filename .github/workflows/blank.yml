@@ -1,0 +1,31 @@
+
+name: Windows Environment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 360
+
+    steps:
+      - name: Informacoes do Windows
+        shell: powershell
+        run: |
+          Write-Host "Windows iniciado!"
+          Get-ComputerInfo | Select-Object WindowsProductName, WindowsVersion
+
+      - name: Informacoes de Hardware
+        shell: powershell
+        run: |
+          Get-CimInstance Win32_Processor |
+            Select-Object Name
+          Get-CimInstance Win32_ComputerSystem |
+            Select-Object TotalPhysicalMemory
+
+      - name: Testar PowerShell
+        shell: powershell
+        run: |
+          Write-Host "Ambiente Windows funcionando"
+          Get-Date
